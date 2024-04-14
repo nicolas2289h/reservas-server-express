@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: 'Token no proporcionado.' })
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, 'jwtSecret', (err, decoded) => {
         if (err) {
             console.log(err)
             return res.status(403).json({ message: 'Token inválido o expirado.' })

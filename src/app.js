@@ -17,6 +17,10 @@ app.use(bodyParser.json());
 app.use(authRouter)
 app.use(reservaRouter)
 
+app.get('/home', (req, res) => {
+    res.json('home')
+})
+
 const port = process.env.PORT || 3000
 
 app.listen(port, () => {
