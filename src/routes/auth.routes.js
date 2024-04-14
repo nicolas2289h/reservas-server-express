@@ -45,7 +45,7 @@ router.post('/register', (req, res) => {
         const query = `INSERT INTO users (nombre, apellido, email, username, password) VALUES (?,?,?,?,?)`;
         db.query(query, [nombre, apellido, email, username, hashedPassword], (err, result) => {
             if (err) {
-                console.error(err); // Error en la consola del servidor para corregir errores
+                console.error(err)
                 return res.status(500).json({ message: err })
             }
 
