@@ -28,7 +28,7 @@ router.post('/login', (req, res) => {
             }
 
             // Genero el token JWT
-            const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            const token = jwt.sign({ id: user.id, username: user.username }, 'jwtSecret', { expiresIn: '1d' });
             res.json({ token, username });
         })
     })

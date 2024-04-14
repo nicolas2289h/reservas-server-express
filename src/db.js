@@ -11,30 +11,11 @@ const connection = mysql.createConnection({
     port: process.env.DB_PORT // MySQL
 })
 
-connection.connect((err) => {
+connection.connect(err => {
     if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-        return;
+        return console.log('Error connecting database ', err.stack)
     }
-    console.log('Conectado a la base de datos MySQL');
+    console.log('Database connected.')
+})
 
-    // Define la consulta SQL para crear la tabla 'prueba'
-    const createTableQuery = `
-        CREATE TABLE IF NOT EXISTS prueba (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nombre VARCHAR(255),
-            apellido VARCHAR(255)
-        )
-    `;
-
-    // Ejecuta la consulta SQL para crear la tabla 'prueba'
-    connection.query(createTableQuery, (err, results) => {
-        if (err) {
-            console.error('Error al crear la tabla:', err);
-            return;
-        }
-        console.log('Tabla "prueba" creada correctamente');
-    });
-});
-
-module.exports = connection;
+module.exports = connection
