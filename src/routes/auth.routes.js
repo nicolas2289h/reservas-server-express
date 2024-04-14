@@ -11,7 +11,7 @@ router.post('/login', (req, res) => {
 
     db.query(query, [username], (err, result) => {
         if (err) {
-            return res.status(500).json({ message: err })
+            return res.status(500).json({ message: 'Error interno del servidor.' })
         }
 
         if (result.length === 0) {
@@ -46,7 +46,7 @@ router.post('/register', (req, res) => {
         db.query(query, [nombre, apellido, email, username, hashedPassword], (err, result) => {
             if (err) {
                 console.error(err); // Error en la consola del servidor para corregir errores
-                return res.status(500).json({ message: 'Error al registrar el usuario.' })
+                return res.status(500).json({ message: err })
             }
 
             return res.status(201).json({ message: 'Usuario registrado exitosamente.' })
