@@ -11,7 +11,7 @@ router.post('/login', (req, res) => {
 
     db.query(query, [username], (err, result) => {
         if (err) {
-            return res.status(500).json({ message: 'Error interno del servidor.' })
+            return res.status(500).json({ message: err })
         }
 
         if (result.length === 0) {
