@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const db = require('../db')
 const jwt = require('jsonwebtoken')
+// SDK de Mercado Pago
+const { MercadoPagoConfig, Preference} = require('mercadopago');
+// Agrega credenciales
+const client = new MercadoPagoConfig({ accessToken: '' }); // COMPLETAR AQUI CON ACCESS TOKEN PERSONAL
 
 const router = Router()
 
@@ -72,5 +76,35 @@ router.delete('/reserva/eliminar/:id', (req, res) => {
         return res.status(200).json({ message: 'Reserva eliminada.' })
     })
 })
+
+// Mercadopago
+router.post('/reserva/create-preference', async (req, res) => {
+    try {
+        const body = {
+            items: [
+                {
+                    title: req.body.title,
+                    quantity: Number(req.body.quantity),
+                    unit_price: Number(req.body.price),
+                    currency_id: "ARS",
+                }
+            ],
+            auto_return: 'approved',
+            back_urls: {
+                success: "https://nh-gestion-reservas.vercel.app/",
+                failure: "https://nh-gestion-reservas.vercel.app/",
+                pending: "https://nh-gestion-reservas.vercel.app/"
+            }
+        }
+
+        const preference = new Preference(client)
+        const result = await preference.create({ body })
+        res.json({ id: result.id })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Error al crear la preferencia" })
+    }
+})
+
 
 module.exports = router;
